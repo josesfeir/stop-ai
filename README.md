@@ -52,7 +52,7 @@ Para añadir una plataforma o actualizar selectores, edita `PLATFORMS` en `src/r
 
 ### Donaciones
 
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FF4D5A?logo=buymeacoffee&logoColor=17191D)](https://buymeacoffee.com/TU_USUARIO)
+[![PayPal](https://img.shields.io/badge/PayPal-Donar%20%2F%20Donate-FF4D5A?logo=paypal&logoColor=17191D)](https://www.paypal.com/donate/?hosted_button_id=Z78W8SWDG6V5S)
 
 ---
 
@@ -89,7 +89,7 @@ Blocked videos are paused and do not autoplay.
 
 ### Donations
 
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FF4D5A?logo=buymeacoffee&logoColor=17191D)](https://buymeacoffee.com/TU_USUARIO)
+[![PayPal](https://img.shields.io/badge/PayPal-Donar%20%2F%20Donate-FF4D5A?logo=paypal&logoColor=17191D)](https://www.paypal.com/donate/?hosted_button_id=Z78W8SWDG6V5S)
 
 ---
 

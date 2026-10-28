@@ -1,6 +1,6 @@
 // Reglas compartidas por el content script y el popup.
 self.BIA = {
-  DONATE_URL: "https://buymeacoffee.com/TU_USUARIO",
+  DONATE_URL: "https://www.paypal.com/donate/?hosted_button_id=Z78W8SWDG6V5S",
 
   DEFAULT_SETTINGS: {
     enabled: true,
