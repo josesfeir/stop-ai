@@ -82,8 +82,10 @@
       if (getComputedStyle(el).position === "static") el.classList.add("bia-relative");
       const ov = document.createElement("div");
       ov.className = "bia-overlay";
-      ov.innerHTML = `<div class="bia-box"><strong>Contenido de IA bloqueado</strong><span></span><button type="button">Mostrar</button></div>`;
+      ov.innerHTML = `<div class="bia-box"><strong></strong><span></span><button type="button"></button></div>`;
+      ov.querySelector("strong").textContent = BIA.t(settings.lang, "overlayTitle");
       ov.querySelector("span").textContent = reason;
+      ov.querySelector("button").textContent = BIA.t(settings.lang, "overlayShow");
       ov.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -120,8 +122,8 @@
     }
     let reason = null;
     const m = matcher.text && text.match(matcher.text);
-    if (m) reason = `Coincidencia: “${m[0].trim()}”`;
-    else if (matchesAccount(el)) reason = "Cuenta en tu lista negra";
+    if (m) reason = BIA.t(settings.lang, "reasonMatch", { match: m[0].trim() });
+    else if (matchesAccount(el)) reason = BIA.t(settings.lang, "reasonAccount");
     if (reason) block(el, def, reason);
     else unblock(el);
   }

@@ -2,14 +2,19 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Bloqueador IA</title>
+  <title>Stop AI</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <header>
     <img src="../icons/icon48.png" alt="" width="28" height="28">
-    <h1>Bloqueador IA</h1>
-    <label class="switch" title="Activar o desactivar">
+    <h1>Stop AI</h1>
+    <select id="lang" aria-label="Idioma / Language">
+      <option value="auto" data-i18n="langAuto"></option>
+      <option value="es">Español</option>
+      <option value="en">English</option>
+    </select>
+    <label class="switch" data-i18n-title="toggle">
       <input type="checkbox" id="enabled">
       <span></span>
     </label>
@@ -18,37 +23,38 @@
   <p id="status" class="status">—</p>
 
   <section>
-    <h2>Modo</h2>
+    <h2 data-i18n="mode"></h2>
     <div class="seg">
-      <label><input type="radio" name="mode" value="blur"> Difuminar</label>
-      <label><input type="radio" name="mode" value="hide"> Ocultar</label>
+      <label><input type="radio" name="mode" value="blur"> <span data-i18n="modeBlur"></span></label>
+      <label><input type="radio" name="mode" value="hide"> <span data-i18n="modeHide"></span></label>
     </div>
   </section>
 
   <section>
-    <h2>Detección</h2>
-    <label class="row"><input type="checkbox" id="detectLabels"> Etiquetas oficiales de IA</label>
-    <label class="row"><input type="checkbox" id="detectHashtags"> Hashtags de IA (#ai, #sora, #midjourney…)</label>
+    <h2 data-i18n="detection"></h2>
+    <label class="row"><input type="checkbox" id="detectLabels"> <span data-i18n="detectLabels"></span></label>
+    <label class="row"><input type="checkbox" id="detectHashtags"> <span data-i18n="detectHashtags"></span></label>
   </section>
 
   <section>
-    <h2>Plataformas</h2>
+    <h2 data-i18n="platforms"></h2>
     <div id="platforms" class="grid"></div>
   </section>
 
   <section>
-    <h2>Palabras clave extra <small>(una por línea)</small></h2>
-    <textarea id="keywords" rows="3" placeholder="deepfake&#10;voz clonada"></textarea>
+    <h2><span data-i18n="keywords"></span> <small data-i18n="onePerLine"></small></h2>
+    <textarea id="keywords" rows="3" data-i18n-placeholder="keywordsPlaceholder"></textarea>
   </section>
 
   <section>
-    <h2>Cuentas bloqueadas <small>(una por línea)</small></h2>
-    <textarea id="accounts" rows="3" placeholder="@canal_ia&#10;usuario_ia"></textarea>
+    <h2><span data-i18n="accounts"></span> <small data-i18n="onePerLine"></small></h2>
+    <textarea id="accounts" rows="3" data-i18n-placeholder="accountsPlaceholder"></textarea>
   </section>
 
-  <a id="donate" class="donate" target="_blank" rel="noopener">☕ Invítame un café</a>
+  <a id="donate" class="donate" target="_blank" rel="noopener" data-i18n="donate"></a>
 
   <script src="../src/rules.js"></script>
+  <script src="../src/i18n.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

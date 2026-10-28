@@ -38,3 +38,7 @@ textarea {
   background: #ffdd00; color: #111; font-weight: 600; text-decoration: none;
 }
 .donate:hover { filter: brightness(.95); }
+select {
+  padding: 3px 6px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--field); color: var(--fg); font: inherit; font-size: 12px;
+}

@@ -3,7 +3,25 @@ const $ = (id) => document.getElementById(id);
 
 const lines = (v) => v.split("\n").map((s) => s.trim()).filter(Boolean);
 
+let lang = "auto";
+
+function translate() {
+  document.documentElement.lang = BIA.resolveLang(lang);
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    el.textContent = BIA.t(lang, el.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    el.placeholder = BIA.t(lang, el.dataset.i18nPlaceholder);
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    el.title = BIA.t(lang, el.dataset.i18nTitle);
+  });
+}
+
 function render(s) {
+  lang = s.lang;
+  $("lang").value = s.lang;
+  translate();
   $("enabled").checked = s.enabled;
   document.querySelector(`input[name=mode][value=${s.mode}]`).checked = true;
   $("detectLabels").checked = s.detectLabels;
@@ -29,6 +47,7 @@ function read() {
     platforms[cb.dataset.platform] = cb.checked;
   });
   return {
+    lang: $("lang").value,
     enabled: $("enabled").checked,
     mode: document.querySelector("input[name=mode]:checked").value,
     detectLabels: $("detectLabels").checked,
@@ -52,19 +71,25 @@ function refreshStatus() {
     if (!tab) return;
     chrome.tabs.sendMessage(tab.id, { type: "bia-count" }, (res) => {
       if (chrome.runtime.lastError || !res) {
-        $("status").textContent = "Esta página no es una plataforma compatible.";
+        $("status").textContent = BIA.t(lang, "unsupported");
         return;
       }
       $("status").textContent = res.active
-        ? `${res.platform}: ${res.count} elemento(s) bloqueado(s) en esta página.`
-        : `${res.platform}: bloqueo desactivado.`;
+        ? BIA.t(lang, "statusCount", { platform: res.platform, count: res.count })
+        : BIA.t(lang, "statusOff", { platform: res.platform });
     });
   });
 }
 
 chrome.storage.sync.get(BIA.DEFAULT_SETTINGS, (s) => {
   render({ ...BIA.DEFAULT_SETTINGS, ...s, platforms: { ...BIA.DEFAULT_SETTINGS.platforms, ...s.platforms } });
-  document.body.addEventListener("change", save);
+  document.body.addEventListener("change", (e) => {
+    if (e.target.id === "lang") {
+      lang = e.target.value;
+      translate();
+    }
+    save();
+  });
   document.body.addEventListener("input", (e) => {
     if (e.target.tagName === "TEXTAREA") save();
   });

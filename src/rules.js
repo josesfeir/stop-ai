@@ -4,6 +4,7 @@ self.BIA = {
 
   DEFAULT_SETTINGS: {
     enabled: true,
+    lang: "auto", // "auto" | "es" | "en"
     mode: "blur", // "blur" | "hide"
     detectLabels: true,
     detectHashtags: true,
