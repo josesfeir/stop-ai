@@ -4,9 +4,12 @@
   "version": "0.1.0",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
   "icons": {
     "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
@@ -14,6 +17,7 @@
     "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
       "48": "icons/icon48.png"
     }
   },
@@ -27,8 +31,14 @@
         "*://*.reelshort.com/*",
         "*://*.x.com/*"
       ],
-      "js": ["src/rules.js", "src/i18n.js", "src/content.js"],
-      "css": ["src/content.css"],
+      "js": [
+        "src/rules.js",
+        "src/i18n.js",
+        "src/content.js"
+      ],
+      "css": [
+        "src/content.css"
+      ],
       "run_at": "document_idle"
     }
   ]

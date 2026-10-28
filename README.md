@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/logo/stopai-logo-dark.svg">
-    <img src="assets/logo/stopai-logo.svg" alt="Stop AI" width="200">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo/stopai-logo-dark.png">
+    <img src="assets/logo/stopai-logo-light.png" alt="Stop AI" width="280">
   </picture>
 </p>
 
@@ -53,7 +53,7 @@ src/content.js       Motor de detección y bloqueo
 src/content.css      Estilos del bloqueo
 popup/               Interfaz de configuración
 icons/               Íconos de la extensión (PNG)
-assets/logo/         Logos (SVG) y originales
+assets/logo/         Logos (claro y oscuro) e ícono a 512 px
 ```
 
 Para añadir una plataforma o actualizar selectores, edita `PLATFORMS` en `src/rules.js` y añade el dominio a `matches` en `manifest.json`. Para añadir un idioma, añade sus textos en `src/i18n.js` y `_locales/`.
