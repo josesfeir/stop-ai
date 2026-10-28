@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Bloqueador IA</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/icon48.png" alt="" width="28" height="28">
+    <h1>Bloqueador IA</h1>
+    <label class="switch" title="Activar o desactivar">
+      <input type="checkbox" id="enabled">
+      <span></span>
+    </label>
+  </header>
+
+  <p id="status" class="status">—</p>
+
+  <section>
+    <h2>Modo</h2>
+    <div class="seg">
+      <label><input type="radio" name="mode" value="blur"> Difuminar</label>
+      <label><input type="radio" name="mode" value="hide"> Ocultar</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>Detección</h2>
+    <label class="row"><input type="checkbox" id="detectLabels"> Etiquetas oficiales de IA</label>
+    <label class="row"><input type="checkbox" id="detectHashtags"> Hashtags de IA (#ai, #sora, #midjourney…)</label>
+  </section>
+
+  <section>
+    <h2>Plataformas</h2>
+    <div id="platforms" class="grid"></div>
+  </section>
+
+  <section>
+    <h2>Palabras clave extra <small>(una por línea)</small></h2>
+    <textarea id="keywords" rows="3" placeholder="deepfake&#10;voz clonada"></textarea>
+  </section>
+
+  <section>
+    <h2>Cuentas bloqueadas <small>(una por línea)</small></h2>
+    <textarea id="accounts" rows="3" placeholder="@canal_ia&#10;usuario_ia"></textarea>
+  </section>
+
+  <a id="donate" class="donate" target="_blank" rel="noopener">☕ Invítame un café</a>
+
+  <script src="../src/rules.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
