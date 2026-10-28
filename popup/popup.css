@@ -1,9 +1,10 @@
 :root {
-  --bg: #ffffff; --fg: #15151a; --muted: #6b6b76; --line: #e4e4ea;
-  --accent: #6d4aff; --field: #f5f5f8;
+  --graphite: #17191D; --coral: #FF4D5A; --white: #F5F5F2;
+  --bg: var(--white); --fg: var(--graphite); --muted: #5E6066; --line: #DCDCD8;
+  --accent: var(--coral); --field: #EAEAE6;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #17171c; --fg: #f1f1f4; --muted: #9a9aa6; --line: #2c2c34; --field: #222229; --accent: #8f74ff; }
+  :root { --bg: var(--graphite); --fg: var(--white); --muted: #A3A4A6; --line: #34373D; --field: #22252A; }
 }
 * { box-sizing: border-box; }
 body {
@@ -30,12 +31,12 @@ textarea {
 .switch { position: relative; width: 38px; height: 22px; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .switch span { position: absolute; inset: 0; border-radius: 999px; background: var(--line); cursor: pointer; transition: background .15s; }
-.switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .15s; }
+.switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--white); transition: transform .15s; }
 .switch input:checked + span { background: var(--accent); }
 .switch input:checked + span::after { transform: translateX(16px); }
 .donate {
   display: block; margin-top: 16px; padding: 9px; border-radius: 8px; text-align: center;
-  background: #ffdd00; color: #111; font-weight: 600; text-decoration: none;
+  background: var(--coral); color: var(--graphite); font-weight: 700; text-decoration: none;
 }
 .donate:hover { filter: brightness(.95); }
 select {
