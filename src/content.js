@@ -21,7 +21,7 @@
       parts.push(`(?:^|${B})(?:${BIA.LABEL_PATTERNS.map(escapeRe).join("|")})(?=$|${B})`);
     }
     if (settings.detectHashtags) {
-      parts.push(`(?:^|${B})#(?:${BIA.DEFAULT_HASHTAGS.map(escapeRe).join("|")})(?=$|${B})`);
+      parts.push(`#(?:${BIA.DEFAULT_HASHTAGS.map(escapeRe).join("|")})(?=$|${B})`);
     }
     const kw = settings.keywords.map((k) => k.trim()).filter(Boolean);
     if (kw.length) {
@@ -34,25 +34,83 @@
     return { text, accounts };
   }
 
+  const MEDIA_DEF = { overlayOnly: true };
+
   function itemDef(el) {
-    return platform.items.find((i) => el.matches(i.sel));
+    return platform.items.find((i) => el.matches(i.sel)) || MEDIA_DEF;
+  }
+
+  const TAG_HREF = /\/(?:tag|hashtag|explore\/tags)\/([^/?#]+)/i;
+
+  // Une los nodos de texto con espacios: textContent pega "texto#ai" y rompe los límites de palabra.
+  function textOf(node) {
+    const parts = [];
+    const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, {
+      acceptNode: (t) => (t.parentElement && t.parentElement.closest(".bia-overlay") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT)
+    });
+    let len = 0;
+    while (walker.nextNode() && len < 8000) {
+      const v = walker.currentNode.nodeValue;
+      if (v.trim()) {
+        parts.push(v);
+        len += v.length;
+      }
+    }
+    return parts.join(" ");
   }
 
   function collectText(el, def) {
     const src = def && def.textFrom ? document.querySelectorAll(def.textFrom) : [el];
     let out = "";
     for (const node of src) {
-      let t = node.textContent || "";
-      node.querySelectorAll(".bia-overlay").forEach((o) => {
-        t = t.replace(o.textContent, "");
-      });
-      out += " " + t;
+      out += " " + textOf(node);
       node.querySelectorAll("[aria-label], img[alt], [title]").forEach((n) => {
         out += " " + (n.getAttribute("aria-label") || "") + " " + (n.getAttribute("alt") || "") + " " + (n.getAttribute("title") || "");
+      });
+      node.querySelectorAll("a[href]").forEach((a) => {
+        const m = a.getAttribute("href").match(TAG_HREF);
+        if (m) {
+          try {
+            out += " #" + decodeURIComponent(m[1]);
+          } catch {}
+        }
       });
       if (out.length > 8000) break;
     }
     return out.replace(/\s+/g, " ").slice(0, 8000);
+  }
+
+  // Contenedores encontrados a partir de los videos y enlaces a videos,
+  // para no depender de clases que la plataforma cambia a menudo.
+  function mediaContainers() {
+    const found = new Set();
+    const maxH = innerHeight * 1.6;
+    const desc = platform.media.desc;
+    document.querySelectorAll("video").forEach((v) => {
+      let el = v.parentElement;
+      let best = el;
+      for (let i = 0; el && el !== document.body && i < 15; i++) {
+        if (el.getBoundingClientRect().height > maxH) break;
+        best = el;
+        if (el.querySelector(desc)) break;
+        el = el.parentElement;
+      }
+      if (best) found.add(best);
+    });
+    const linkSel = platform.media.links;
+    document.querySelectorAll(linkSel).forEach((a) => {
+      const href = a.getAttribute("href");
+      let el = a;
+      for (let i = 0; i < 8; i++) {
+        const parent = el.parentElement;
+        if (!parent || parent === document.body) break;
+        const other = [...parent.querySelectorAll(linkSel)].some((b) => b.getAttribute("href") !== href);
+        if (other) break;
+        el = parent;
+      }
+      found.add(el);
+    });
+    return found;
   }
 
   function matchesAccount(el) {
@@ -74,6 +132,7 @@
   function block(el, def, reason) {
     if (el.dataset.biaAllowed) return;
     if (el.classList.contains("bia-blocked")) return;
+    el.querySelectorAll(".bia-blocked").forEach(unblock);
     el.classList.add("bia-blocked");
     const useHide = settings.mode === "hide" && !(def && def.overlayOnly);
     if (useHide) {
@@ -135,6 +194,7 @@
   function scan() {
     if (!active()) return;
     document.querySelectorAll(itemSelector).forEach(evaluate);
+    if (platform.media) mediaContainers().forEach(evaluate);
   }
 
   function resetAll() {

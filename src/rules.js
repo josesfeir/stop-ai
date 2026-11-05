@@ -39,7 +39,15 @@ self.BIA = {
     "info de ia",
     "información de ia",
     "etiquetado como generado por ia",
-    "el creador lo etiquetó como generado por ia"
+    "el creador lo etiquetó como generado por ia",
+    "etiquetado por el creador como generado por ia",
+    "contenido generado por ia",
+    "contenido generado con ia",
+    "creado con inteligencia artificial",
+    "generado por inteligencia artificial",
+    "ai-generated content",
+    "ai generated content",
+    "aigc"
   ],
 
   DEFAULT_HASHTAGS: [
@@ -71,6 +79,10 @@ self.BIA = {
     tiktok: {
       name: "TikTok",
       hosts: ["tiktok.com"],
+      media: {
+        desc: "[data-e2e*='desc'], a[href*='/tag/'], [data-e2e*='aigc'], [class*='Aigc'], [class*='AIGC']",
+        links: "a[href*='/video/'], a[href*='/photo/']"
+      },
       items: [
         { sel: "[data-e2e='recommend-list-item-container']", overlayOnly: true },
         { sel: "article", overlayOnly: true },
